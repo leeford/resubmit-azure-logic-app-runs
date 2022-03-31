@@ -15,7 +15,10 @@ param (
     $FailedOnly,
     [Parameter(Mandatory = $false)]
     [string]
-    $AfterDate = ((Get-Date).AddDays(-1).ToUniversalTime().tostring("yyyy-MM-ddTHH:mm:ssZ")) # Last 24 hours
+    $AfterDate = ((Get-Date).AddDays(-1).ToUniversalTime().tostring("yyyy-MM-ddTHH:mm:ssZ")), # Last 24 hours
+    [Parameter(mandatory = $false)]
+    [integer]
+    $DelayBetweenRuns = 1000
 )
 
 # Validate subscription
@@ -86,5 +89,5 @@ $LogicAppRuns | ForEach-Object {
     else {
         Write-Host "SUCCESS" -ForegroundColor Green
     }
-    Start-Sleep -Milliseconds 1000
+    Start-Sleep -Milliseconds $DelayBetweenRuns
 }
