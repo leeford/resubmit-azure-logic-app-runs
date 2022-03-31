@@ -1,4 +1,4 @@
-# resubmit-azure-logic-app-runs
+# Resubmit Azure Logic App Runs
 ![image](https://user-images.githubusercontent.com/472320/161092468-07b504f3-6cda-4a1f-be23-41235216eb33.png)
 
 A PowerShell script to allow you to resubmit Azure Logic App runs in bulk (using `az` cli)
