@@ -15,9 +15,9 @@ param (
     $FailedOnly,
     [Parameter(Mandatory = $false)]
     [string]
-    $AfterDate = ((Get-Date).AddDays(-1).ToUniversalTime().tostring("yyyy-MM-ddTHH:mm:ssZ")), # Last 24 hours
+    $AfterDate = ((Get-Date).AddDays(-1).ToUniversalTime().tostring("yyyy-MM-ddTHH:mm:ssZ")),
     [Parameter(mandatory = $false)]
-    [integer]
+    [int]
     $DelayBetweenRuns = 1000
 )
 
