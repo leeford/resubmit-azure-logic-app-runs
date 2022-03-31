@@ -3,22 +3,27 @@
 
 A PowerShell script to allow you to resubmit Azure Logic App runs in bulk (using `az` cli)
 
-Resubmit all Logic App runs (for specified Logic App) from the last 24 hours
+## Pre-requisites
+You will need to have Azure CLI and PowerShell installed on your machine. Or, use [Azure Cloud Shell](https://shell.azure.com)
+
+## Usage
+
+_Resubmit all Logic App runs (for specified Logic App) from the last 24 hours_
 ```
 ResubmitLogicAppRuns.ps1 -SubscriptionId <Subscription ID> -ResourceGroupName <Resource Group Name> -LogicAppName <Logic App Name>
 ```
 
-Resubmit **failed** Logic App runs (for specified Logic App) from the last 24 hours
+_Resubmit **failed** Logic App runs (for specified Logic App) from the last 24 hours_
 ```
 ResubmitLogicAppRuns.ps1 -SubscriptionId <Subscription ID> -ResourceGroupName <Resource Group Name> -LogicAppName <Logic App Name> -FailedOnly
 ```
 
-Resubmit all Logic App runs (for specified Logic App) from specified date (in YYYY-MM-DDTHH:MM:SSZ format)
+_Resubmit all Logic App runs (for specified Logic App) from specified date (in YYYY-MM-DDTHH:MM:SSZ format)_
 ```
 ResubmitLogicAppRuns.ps1 -SubscriptionId <Subscription ID> -ResourceGroupName <Resource Group Name> -LogicAppName <Logic App Name> -AfterDate YYYY-MM-DDTHH:MM:SSZ
 ```
 
-Resubmit **failed** Logic App runs (for specified Logic App) from specified date (in YYYY-MM-DDTHH:MM:SSZ format)
+_Resubmit **failed** Logic App runs (for specified Logic App) from specified date (in YYYY-MM-DDTHH:MM:SSZ format)_
 ```
 ResubmitLogicAppRuns.ps1 -SubscriptionId <Subscription ID> -ResourceGroupName <Resource Group Name> -LogicAppName <Logic App Name> -AfterDate YYYY-MM-DDTHH:MM:SSZ -FailedOnly
 ```
