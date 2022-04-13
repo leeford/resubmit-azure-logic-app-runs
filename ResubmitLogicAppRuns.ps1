@@ -47,7 +47,7 @@ if (!$?) {
     exit 1
 }
 if ($LogicApp.name) {
-    Write-Host "Logic App: $($LogicApp.name) found..." -ForegroundColor Green
+    Write-Host "Logic App: $($LogicApp.name) found" -ForegroundColor Green
     # Get Logic App Run History
     if ($FailedOnly) {
         $filters = "startTime ge $($AfterDate) and status eq 'Failed'"
@@ -55,6 +55,9 @@ if ($LogicApp.name) {
     else {
         $filters = "startTime ge $($AfterDate)"
     }
+    Write-Host "Getting Logic App runs..."
+    Write-Host " - After: $($AfterDate)"
+    if ($FailedOnly) { Write-Host " - Only Failed runs" }
     # Loop through each batch of runs (if required)
     $currentUri = "https://management.azure.com/subscriptions/$($SubscriptionId)/resourceGroups/$($ResourceGroupName)/providers/Microsoft.Logic/workflows/$($LogicAppName)/runs?api-version=2016-06-01&`$filter=$filters"
     $LogicAppRuns = while (-not [string]::IsNullOrEmpty($currentUri)) {
@@ -76,10 +79,12 @@ if ($LogicApp.name) {
 }
 
 # Resubmit runs
-Write-Host "$(($LogicAppRuns).count) Logic App Runs found..."
+$totalRuns = ($LogicAppRuns).count
+Write-Host "$($totalRuns) Logic App runs found" -ForegroundColor Green
 $LogicAppRuns | ForEach-Object {
-    Write-Host "Logic App Run: $($_.name)" -ForegroundColor Yellow
-    Write-Host " - Resubmitting Run: $($_.name)..." -ForegroundColor Yellow
+    $count++
+    Write-Host "Logic App Run ($($count)/$($totalRuns)):" -ForegroundColor Yellow
+    Write-Host " - Resubmitting run: $($_.name)..."
     az rest `
         --method POST `
         --url "https://management.azure.com/subscriptions/$($SubscriptionId)/resourceGroups/$($ResourceGroupName)/providers/Microsoft.Logic/workflows/$($LogicAppName)/triggers/$($_.properties.trigger.name)/histories/$($_.name)/resubmit?api-version=2016-06-01" | ConvertFrom-Json
