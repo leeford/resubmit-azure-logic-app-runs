@@ -2,7 +2,7 @@
 
 ![image](https://user-images.githubusercontent.com/472320/163171256-2fb812cd-4f12-40ed-856f-825400a8b2d9.png)
 
-Sometimes, things don't go according to plan. For example, you may need to re-submit (re-run) some Azure Logic App runs. If its a handful, this is easily done in the Azure Portal one-by-one. If its 100s or even 1000s, this will be very time consuming! Thankfully, there is a way to automate this!
+Sometimes, things in Logic Apps land don't go according to plan. For example, you may need to re-submit (re-run) some Azure Logic App runs. If its a few, this is easily done in the Azure Portal one-by-one. If its 100s or even 1000s, this will be very time consuming activity! Thankfully, there is a way to automate this...
 
 This script allows you to resubmit Azure Logic App runs in bulk (using PowerShell and `az` cli)
 
