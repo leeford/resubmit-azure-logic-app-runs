@@ -28,13 +28,17 @@ ResubmitLogicAppRuns.ps1 -SubscriptionId <Subscription ID> -ResourceGroupName <R
 ResubmitLogicAppRuns.ps1 -SubscriptionId <Subscription ID> -ResourceGroupName <Resource Group Name> -LogicAppName <Logic App Name> -Status Failed
 ```
 
-### Resubmit all Logic App runs (for specified Logic App) from specified date (in YYYY-MM-DDTHH:MM:SSZ format)
+### Resubmit all Logic App runs (for specified Logic App) from specified date
+
+(in YYYY-MM-DDTHH:MM:SSZ format)
 
 ```powershell
 ResubmitLogicAppRuns.ps1 -SubscriptionId <Subscription ID> -ResourceGroupName <Resource Group Name> -LogicAppName <Logic App Name> -AfterDate YYYY-MM-DDTHH:MM:SSZ
 ```
 
-### Resubmit **Cancelled** Logic App runs (for specified Logic App) from specified date (in YYYY-MM-DDTHH:MM:SSZ format)
+### Resubmit **Cancelled** Logic App runs (for specified Logic App) from specified date
+
+(in YYYY-MM-DDTHH:MM:SSZ format)
 
 ```powershell
 ResubmitLogicAppRuns.ps1 -SubscriptionId <Subscription ID> -ResourceGroupName <Resource Group Name> -LogicAppName <Logic App Name> -AfterDate YYYY-MM-DDTHH:MM:SSZ -Status Cancelled
