@@ -11,8 +11,8 @@ param (
     [string]
     $LogicAppName,
     [Parameter(mandatory = $false)]
-    [switch]
-    $FailedOnly,
+    [ValidateSet("Aborted", "Cancelled", "Failed", "Faulted", "Ignored", "NotSpecified", "Paused", "Running", "Skipped", "Succeeded", "Suspended", "TimedOut", "Waiting")]
+    $Status,
     [Parameter(Mandatory = $false)]
     [string]
     $AfterDate = ((Get-Date).AddDays(-1).ToUniversalTime().tostring("yyyy-MM-ddTHH:mm:ssZ")),
@@ -49,15 +49,15 @@ if (!$?) {
 if ($LogicApp.name) {
     Write-Host "Logic App: $($LogicApp.name) found" -ForegroundColor Green
     # Get Logic App Run History
-    if ($FailedOnly) {
-        $filters = "startTime ge $($AfterDate) and status eq 'Failed'"
+    if ($Status) {
+        $filters = "startTime ge $($AfterDate) and status eq '$($Status)'"
     }
     else {
         $filters = "startTime ge $($AfterDate)"
     }
     Write-Host "Getting Logic App runs..."
     Write-Host " - After: $($AfterDate)"
-    if ($FailedOnly) { Write-Host " - Only Failed runs" }
+    if ($Status) { Write-Host " - Status: $($Status)" }
     # Loop through each batch of runs (if required)
     $currentUri = "https://management.azure.com/subscriptions/$($SubscriptionId)/resourceGroups/$($ResourceGroupName)/providers/Microsoft.Logic/workflows/$($LogicAppName)/runs?api-version=2016-06-01&`$filter=$filters"
     $LogicAppRuns = while (-not [string]::IsNullOrEmpty($currentUri)) {
@@ -84,7 +84,7 @@ Write-Host "$($totalRuns) Logic App runs found" -ForegroundColor Green
 $LogicAppRuns | ForEach-Object {
     $count++
     Write-Host "Logic App Run ($($count)/$($totalRuns)):" -ForegroundColor Yellow
-    Write-Host " - Resubmitting run: $($_.name)..."
+    Write-Host " - Re-submitting run: $($_.name)... " -NoNewline
     az rest `
         --method POST `
         --url "https://management.azure.com/subscriptions/$($SubscriptionId)/resourceGroups/$($ResourceGroupName)/providers/Microsoft.Logic/workflows/$($LogicAppName)/triggers/$($_.properties.trigger.name)/histories/$($_.name)/resubmit?api-version=2016-06-01" | ConvertFrom-Json
